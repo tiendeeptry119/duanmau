@@ -8,7 +8,8 @@ class HomeController
     {
         $this->model = new Home;
     }
-    ////////////////////////////// Xử lí đăng nhập
+
+    // Hiển thị trang đăng nhập
     public function login()
     {
         require './views/login.php';
@@ -16,6 +17,8 @@ class HomeController
             deleteSessionError();
         }
     }
+
+    // Xử lý đăng nhập
     public function postLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,86 +26,59 @@ class HomeController
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $listUsers = $this->model->getAllUser();
             $error = [];
+
             if (empty($username)) {
                 $error['username'] = "Không để trống tên đăng nhập";
             }
             if (empty($password)) {
-                $error['password'] = "Không để trống tên mật khẩu";
+                $error['password'] = "Không để trống mật khẩu";
             }
 
-
-
-            // check pass
             $User = $this->model->getUser($username);
-            if ($User == false) {
-                $error['username'] = "Tài khoản không chính xác";
-            }
 
-            if ($User['mat_khau'] != $password) {
-            
+            if (!$User) {
+                $error['username'] = "Tài khoản không chính xác";
+            } elseif ($User['mat_khau'] != $password) {
                 $error['password'] = 'Mật khẩu không chính xác';
             }
 
-
-
             if (empty($error)) {
+                $_SESSION['username'] = $username;
 
-                // mật khẩu với tải khoản người dùng nhập vào và thực hiện so sánh
-
-
-                if($User['trang_thai'] == 1){
-                    if ($User['chuc_vu_id'] === 1) {
-                        $_SESSION['username'] = $username;
-                        header('location: ' . BASE_URL_ADMIN);
-                        exit();
-                    }
-                    if ($User['chuc_vu_id'] === 0) {
-                        $_SESSION['username'] = $username;
-                        header('location: ' . BASE_URL_CLIENT);
-                        exit();
-                    }
-                }else{
-                    $error['trang_thai'] = 'Tài khoản của bạn đã bị cấm';
-                    $_SESSION['error'] = $error;
-                    $_SESSION['flash'] = true;
-                    header('location: ' . BASE_URL);
+                if ($User['chuc_vu_id'] == 1) {
+                    header('Location: ' . BASE_URL_ADMIN);
+                    exit();
+                } else {
+                    header('Location: ' . BASE_URL_CLIENT);
                     exit();
                 }
-                
-                    
-                
             } else {
-
-
                 $_SESSION['error'] = $error;
                 $_SESSION['flash'] = true;
-                header('location: ' . BASE_URL);
+                header('Location: ' . BASE_URL);
                 exit();
             }
         }
     }
-    ////////////////////////////// end Xử lí đăng nhập
 
-
-
-    ////////////////////////////// Xử lí đăng kí
+    // Hiển thị form đăng ký
     public function formDangky()
     {
-
         require './views/formDangKy.php';
         if (isset($_SESSION['flash'])) {
             deleteSessionError();
         }
     }
 
+    // Xử lý đăng ký
     public function postDangKy()
     {
         if (isset($_POST['return-login'])) {
-            header('location:' . BASE_URL);
+            header('Location: ' . BASE_URL);
             exit();
         }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
             $ten_dang_nhap = $_POST['ten_dang_nhap'];
@@ -115,15 +91,10 @@ class HomeController
             $gioi_tinh = $_POST['gioi_tinh'];
             $ngay_sinh = $_POST['ngay_sinh'];
             $chuc_vu_id = $_POST['chuc_vu_id'];
-
             $hinh_anh = $_FILES['hinh_anh'];
 
-
-
-
-
-            $listUsers = $this->model->getAllUser();
             $error = [];
+
             if (empty($ten_dang_nhap)) {
                 $error['ten_dang_nhap'] = "Không để trống tên đăng nhập";
             }
@@ -132,6 +103,9 @@ class HomeController
             }
             if (empty($xac_nhan_mat_khau)) {
                 $error['xac_nhan_mat_khau'] = "Không để trống xác nhận mật khẩu";
+            }
+            if ($mat_khau !== $xac_nhan_mat_khau) {
+                $error['xac_nhan_mat_khau'] = "Xác nhận mật khẩu không chính xác";
             }
             if (empty($ho_ten)) {
                 $error['ho_ten'] = "Không để trống họ tên";
@@ -145,49 +119,49 @@ class HomeController
             if (empty($ngay_sinh)) {
                 $error['ngay_sinh'] = "Không để trống ngày sinh";
             }
-            if ($gioi_tinh == 'chua_chon') {
+            if ($gioi_tinh === 'chua_chon') {
                 $error['gioi_tinh'] = "Bạn phải chọn giới tính";
             }
 
-            // check xác nhận nhận mật khẩu
-            if ($mat_khau !== $xac_nhan_mat_khau) {
-                $error['xac_nhan_mat_khau'] = "Xác nhận mật khẩu không chính xác";
-            }
-
-            foreach ($listUsers as $key => $user) {
+            $listUsers = $this->model->getAllUser();
+            foreach ($listUsers as $user) {
                 if ($ten_dang_nhap === $user['ten_dang_nhap']) {
                     $error['ten_dang_nhap'] = "Tài khoản đã tồn tại";
+                    break;
                 }
             }
 
-
-            $file_thumb = upLoad($hinh_anh, './uploads/');
-            if (empty($error)) { // xứ lí thêm dữ liệu vào database
-                if ($this->model->postTaiKhoan($ten_dang_nhap, $mat_khau, $ho_ten, $email, $so_dien_thoai, $dia_chi, $gioi_tinh, $file_thumb, $ngay_sinh, $chuc_vu_id)) {
-
-                    header('location: ' . BASE_URL);
-                    exit();
+            $file_thumb = 'default.png';
+            if ($hinh_anh['error'] === 0) {
+                $upload = upLoad($hinh_anh, './uploads/');
+                if ($upload) {
+                    $file_thumb = $upload;
                 }
+            }
+
+            if (empty($error)) {
+                $this->model->postTaiKhoan(
+                    $ten_dang_nhap,
+                    $mat_khau,
+                    $ho_ten,
+                    $email,
+                    $so_dien_thoai,
+                    $dia_chi,
+                    $gioi_tinh,
+                    $file_thumb,
+                    $ngay_sinh,
+                    $chuc_vu_id
+                );
+
+                $_SESSION['success'] = "Đăng ký thành công!";
+                header('Location: ' . BASE_URL);
+                exit();
             } else {
                 $_SESSION['error'] = $error;
                 $_SESSION['flash'] = true;
-                header('location: ' . BASE_URL . '?act=form-dang-ky');
+                header('Location: ' . BASE_URL . '?act=form-dang-ky');
                 exit();
             }
         }
     }
-    /////////////////////////// end Xử lí đăng kí
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

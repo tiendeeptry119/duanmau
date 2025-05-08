@@ -45,7 +45,7 @@ INSERT INTO `binh_luans` (`san_pham_id`, `tai_khoan_id`, `noi_dung`, `ngay_dang`
 (5, 3, 'abv', '2024-07-28', 1, 2),
 (6, 3, 'abc', '2024-07-28', 1, 4),
 (6, 3, 'abc', '2024-07-28', 0, 5),
-(5, 2, 'Chó Husky có kích thước trung bình, đứng từ 51 đến 60 cm cao tại vai và nặng từ 20 đến 27 kg. Chúng có một lớp lông dày và mềm mại, màu trắng, đen, xám hoặc đỏ, thường có các vệt trắng hoặc nâu nhạt. Chó Husky có một bộ răng cực kỳ mạnh mẽ và hàm khỏe, giúp chúng dễ dàng nghiền nát thức ăn và kéo xe.', '2024-07-28', 1, 7);
+(5, 2, '', '2024-07-28', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -248,8 +248,9 @@ CREATE TABLE `san_phams` (
 --
 
 INSERT INTO `san_phams` (`id`, `ten_san_pham`, `gia_san_pham`, `gia_khuyen_mai`, `hinh_anh`, `so_luong`, `luot_xem`, `ngay_nhap`, `mo_ta`, `danh_muc_id`, `trang_thai`) VALUES
-(5, 'Chó ', '10000000', '1000000', './uploads/17991831851tải xuống.jpg', 120, 17, '2024-07-23', 'Chó Husky có kích thước trung bình, đứng từ 51 đến 60 cm cao tại vai và nặng từ 20 đến 27 kg. Chúng có một lớp lông dày và mềm mại, màu trắng, đen, xám hoặc đỏ, thường có các vệt trắng hoặc nâu nhạt. Chó Husky có một bộ răng cực kỳ mạnh mẽ và hàm khỏe, giúp chúng dễ dàng nghiền nát thức ăn và kéo xe.', 24, '1'),
-(6, 'Mèo anh lông ngắn tai cụp', '10000000', '1000000', './uploads/64422289581tải xuống (1).jpg', 12, 12, '2024-07-23', 'Mèo Anh lông ngắn tai cụp là giống mèo có kích thước trung bình, cứng cáp, những con mèo tuyệt đẹp này có đầu tròn, cổ lùn và đôi mắt to tròn, kết hợp với đôi tai cụp tạo cho chúng vẻ ngoài giống… một chú chim cú mèo. Bộ lông của chúng thường ngắn và dày, đa màu sắc như trắng, xanh, bạc, đen, cameo và nâu.', 23, '1');
+(5, 'Giày Adidas', '10000000', '1000000', './uploads/54732533232giay-Nike-Air-Jordan-1-Mid-SE-GS-Swoosh-Logo-Grey-Camo-rep-11-4-2048x2048.jpg', 120, 17, '2024-07-23', 'Hãng giày Nike được Bill Bowerman và Philip Knight sáng lập...
+', 24, '1'),
+(6, 'Giày Nike', '10000000', '1000000', './uploads/13736964288th.jpg', 12, 12, '2024-07-23', 'Đây là dòng giày chú trọng nhiều về mục đích thời trang....', 23, '1');
 
 -- --------------------------------------------------------
 

@@ -1,120 +1,158 @@
-*{
+/* RESET */
+* {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
     text-decoration: none;
-
 }
-body{
 
-  width: auto;
+body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-family: sans-serif;
 }
-.layout{
-    width: 1530px;
+
+/* LAYOUT CHUNG */
+.layout {
+    max-width: 1200px;
+    width: 100%;
     margin: auto;
-    position: relative;
-    
+    padding: 0 15px;
 }
-.navbar{
-    width:1530px;
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px 15px;
     position: sticky;
-    
-    margin: auto;
-    height: 80px;
-  
-}
-.navbar .form-row{
-    margin-top: 20px;
-}
-.avatar{
-   margin-left: 60px;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.navbar a{
+/* LOGO */
+.logo-navbar {
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-navbar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* MENU LINKS */
+.navbar .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 0 15px;
+}
+
+.navbar .menu a {
     color: black;
     font-size: 18px;
-    padding: 10px
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.2s;
 }
-.navbar a:hover{
-    background: #426B1F;
+
+.navbar .menu a:hover {
+    background-color: #426B1F;
     color: white;
-    border-radius: 10px;
-    border: 3px solid black;
+    border: 2px solid black;
 }
-.navbar a:focus{
-    background: #426B1F;
+
+/* SEARCH FORM */
+.navbar .search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navbar .search-form input {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.navbar .search-form button {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #426B1F;
     color: white;
-    border-radius: 10px;
-    border: 3px solid black;
-}
-hr{
-    box-shadow: 0px 2px 5px black;
+    cursor: pointer;
 }
 
-.banner{
-
-    width: 1530px;
-    height: 650px;
-    background-size: cover;
-}
-.content{
-    width: 1530px;
-}
-.gioi-thieu{
-    width: 1530px;
-    margin: 0px auto;
-   
-}
-.gioi-thieu ul{
-    padding-top: 50px;
-}
-.gioi-thieu ul li{
-    width: 600px;
-    margin: 20px;
-    font-size: 18px;
-}
-.gioi-thieu img{
-    margin: 20px 0px 20px 0px;
-}
-.product-item{
-    width: 1530px;
-    margin: 0px auto;
-   
-}
-.product-item ul{
-    padding-top: 50px;
-}
-.product-item ul li{
-    width: 600px;
-    margin: 20px;
-    font-size: 18px;
-}
-.product-item img{
-    margin: 20px 0px 20px 0px;
+.navbar .search-form button:hover {
+    background-color: #2f4e17;
 }
 
- .title a{
-    color: black;
-    font-size: 30px;
-    font-weight: bold;
+/* AVATAR */
+.navbar .avatar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 15px;
 }
-.content img:hover{
-    transition: .5s;
-    transform: scale(1.1);
+
+.navbar .avatar img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
- .products img:hover{
-    transition: .5s;
-    transform: scale(1.1);
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .menu,
+    .navbar .search-form,
+    .navbar .avatar {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .navbar .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar .search-form {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .navbar .search-form input {
+        flex: 1;
+    }
 }
-.footer{
-    background-color: rgba(88, 88, 88, 0.2);
-    color: black;
+/* FOOTER */
+.footer {
+    background-color: #333; /* Màu nền footer */
+    color: white; /* Màu chữ trong footer */
+    padding: 20px 0;
+    text-align: center;
 }
-.footer li p{
-    color: black;
-    padding: 0;
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
-.footer .title{
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 20px;
+
+.footer a:hover {
+    color: #426B1F;
 }
+
